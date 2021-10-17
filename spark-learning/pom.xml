@@ -1,13 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>fr.htc.spark</groupId>
-  <artifactId>spark-learning</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.htc.spark</groupId>
+	<artifactId>spark-learning</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 
-	<properties>
-		<scala.binary.version>2.11</scala.binary.version>
-		<spark.version>2.1.0</spark.version>
-	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -55,11 +53,13 @@
 			<artifactId>delta-core_2.11</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>elasticsearch-rest-high-level-client</artifactId>
 			<version>7.1.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
