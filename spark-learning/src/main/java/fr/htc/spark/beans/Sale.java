@@ -3,7 +3,7 @@ package fr.htc.spark.beans;
 import java.io.Serializable;
 
 public class Sale implements Serializable {
-	
+
 	private static final long serialVersionUID = -415348036409985383L;
 
 	private long productId;
@@ -101,10 +101,6 @@ public class Sale implements Serializable {
 		return sale;
 	}
 
-	public Double getCa() {
-		return this.storeSales * this.unitSales;
-	}
-	
 	@Override
 	public String toString() {
 		return "Sale [productId=" + productId + ", timeId=" + timeId + ", customerId=" + customerId + ", promotionId="
@@ -112,8 +108,4 @@ public class Sale implements Serializable {
 				+ ", unitSales=" + unitSales + "]";
 	}
 
-
-
-	
-	
 }
