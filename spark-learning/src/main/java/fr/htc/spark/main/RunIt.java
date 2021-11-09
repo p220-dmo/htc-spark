@@ -1,9 +1,9 @@
 package fr.htc.spark.main;
 
-import org.apache.spark.api.java.JavaPairRDD;
+import java.util.Map;
+
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 
 import fr.htc.spark.beans.Sale;
@@ -13,7 +13,7 @@ import scala.Tuple2;
 public class RunIt {
 
 	/**
-	 * Exercice 4: Calculer le chiffre d'affaire par magasin
+	 * Exercice 5: Calculer le nombre d'unités vendues par magasin
 	 * 
 	 * @param args
 	 */
@@ -24,18 +24,14 @@ public class RunIt {
 
 		JavaRDD<Sale> salesAsObjects = salesAsStringRDD.map(csvLine -> Sale.parse(csvLine, ";"));
 
-		// On peut le faire avec reduceByKey ou groupByKey. Cependant, il faut
-		// privilègier reduceByKey, car un calcul intermédiaire se fait au niveau de
-		// chaque partition avant d'envoyer les résultats sur le réseau. Ce qui fait
-		// qu'on n'envoie qu'un tuple par clé et par partition. Conséquence, moins de
-		// trafic réseau !!!
+		//Mapper la RDD vers une Map de type Pair et faire un countByKey qui nous retourne une Map <storeId, unitSales>
+		Map<Long, Long> numberUnitsByStore = salesAsObjects
+				.mapToPair((PairFunction<Sale, Long, Double>) sale -> new Tuple2<Long, Double>(sale.getStoreId(), sale.getUnitSales()))
+				.countByKey();
 		
-		JavaPairRDD<Long, Double> storeCA = salesAsObjects.mapToPair(
-				(PairFunction<Sale, Long, Double>) sale -> new Tuple2<Long, Double>(sale.getStoreId(), sale.getCa()))
-				.reduceByKey((Function2<Double, Double, Double>) (ca1, ca2) -> ca1 + ca2);
+		numberUnitsByStore
+			.forEach((storeId, unitSales) -> System.out.println("Magasin : " + storeId + " a un vendu : " + unitSales + " unités"));
 
-		storeCA.collectAsMap().forEach((storeId, caByStore) -> System.out
-				.println("Magasin : " + storeId + " a un chiffre d'affaires : " + caByStore));
 
 	}
 
